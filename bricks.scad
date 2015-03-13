@@ -3,6 +3,10 @@
 //Thanks for the original dimensions from
 //http://www.robertcailliau.eu/Lego/Dimensions/zMeasurements-en.xhtml
 
+//the simplest way to use this is to include the follwoing in your .scad file:
+// use <bricks.scad>  //adds this file to your project
+//brick(2,3);  //creates a 2 x 3 brick
+
 //constants
 brickGap = 0.2;  //distance left between bricks
 wallThick = 1.2; //thickness of brick sides
@@ -49,7 +53,7 @@ module bottomCyls(x,y)
     {
         for (j=[0:(y-1)])
         {
-            if ((i!=0) && (j!=0))//both are odd
+            if ((i!=0) && (j!=0))
             {
                       translate([i*8,j*8,-9.6]) 
                         bottomCyl();
@@ -77,6 +81,8 @@ module topKnobs(x,y)
     }
 }
 
+
+//the mainly useful modules are the following:
 
 module brick(x,y)
 //generates a complete brick with shell, knobs, and bottom grip cylinders
