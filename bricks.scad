@@ -3,10 +3,6 @@
 //Thanks for the original dimensions from
 //http://www.robertcailliau.eu/Lego/Dimensions/zMeasurements-en.xhtml
 
-//the simplest way to use this is to include the follwoing in your .scad file:
-// use <bricks.scad>  //adds this file to your project
-//brick(2,3);  //creates a 2 x 3 brick
-
 //constants
 brickGap = 0.2;  //distance left between bricks
 wallThick = 1.2; //thickness of brick sides
@@ -36,24 +32,33 @@ module brickShell(x,y)
         }
 }
 
+module bottomCyl()
+//a single cylinder
+{
+    //cylinder
+    difference()
+    {
+        cylinder(h=8.6, r=3.25, $fn=100);
+        translate([0,0,-1])
+            cylinder(h=8.6, r=2.8, $fn=100);
+    }
+    //side fins
+    translate([-0.5,3,3.6])
+        cube([1,4,6]);
+    translate([-0.5,-7,3.6])
+        cube([1,4,6]);
+}
+
 module bottomCyls(x,y)
 //the cylinders underneath a shell which grip the knobs from bricks underneath
 {
-    module bottomCyl()
-    //a single cylinder
-    {
-        difference()
-        {
-            cylinder(h=8.6, r=3.25, $fn=100);
-            translate([0,0,-1])
-                cylinder(h=8.6, r=2.8, $fn=100);
-        }
-    }
+
+    
     for (i=[0:(x-1)])
     {
         for (j=[0:(y-1)])
         {
-            if ((i!=0) && (j!=0))
+            if ((i!=0) && (j!=0))//both are odd
             {
                       translate([i*8,j*8,-9.6]) 
                         bottomCyl();
@@ -82,8 +87,6 @@ module topKnobs(x,y)
 }
 
 
-//the mainly useful modules are the following:
-
 module brick(x,y)
 //generates a complete brick with shell, knobs, and bottom grip cylinders
 //x & y are the dimensions in 'knobs'
@@ -106,4 +109,5 @@ module topPlate(x,y)
     }
 }
 
-        
+
+brick(2,2);  //just for testing
